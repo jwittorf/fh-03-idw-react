@@ -24,7 +24,8 @@ class ProductListItemImage extends React.Component {
     }
 
     render() {
-        return <img src={this.props.data.img_src} alt={this.props.data.img_alt} class="align-self-start mr-3 img-fluid img-thumbnail w-25"/>;
+        let data = this.props.data;
+        return <img src={data.img_src} alt={data.img_alt} class="align-self-start mr-3 img-fluid img-thumbnail w-25"/>;
     }
 }
 
@@ -34,15 +35,16 @@ export default class ProductListItem extends React.Component {
     }
 
     render() {
+        let data = this.props.data;
         return (
             <div>
                 <div class="list-group-item product-list-item">
                     <ProductListItemCategory/>
                     <div class="product-list-item-body mt-1">
                         <div class="media">
-                            <ProductListItemImage data={this.props.data}/>
+                            <ProductListItemImage data={data}/>
                             <div class="media-body">
-                                <h3 class="h5 mt-0">Intel Core i7-9700K</h3>
+                                <h3 class="h5 mt-0">{data.name}</h3>
                                 <div class="row">
                                     <div class="col-6">
                                         <button class="btn btn-secondary btn-sm product-list-item-body-btn-details" type="button">Details</button>
