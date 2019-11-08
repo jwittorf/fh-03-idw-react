@@ -37,6 +37,8 @@ export default class ProductListItem extends React.Component {
 
     render() {
         let data = this.props.data;
+        let price = data.price.toFixed(2);
+        price = price.replace(".", ",");
         return (
             <div>
                 <div class="list-group-item product-list-item">
@@ -51,7 +53,7 @@ export default class ProductListItem extends React.Component {
                                         <button class="btn btn-secondary btn-sm product-list-item-body-btn-details" type="button">Details</button>
                                     </div>
                                     <div class="col-6">
-                                        <div class="product-list-item-body-price text-right">{data.price}&nbsp;&euro;
+                                        <div class="product-list-item-body-price text-right">{price}&nbsp;&euro;
                                         </div>
                                     </div>
                                 </div>

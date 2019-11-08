@@ -11,15 +11,15 @@ export default class ProductList extends React.Component {
                     name: 'Intel Core i7-9700K',
                     img_src: 'https://placehold.it/250',
                     img_alt: 'Placeholder 250x250px',
-                    price: '414,00',
-                    category: 'CPU'
+                    price: 414,
+                    category: 'CPU',
                 },
                 1: {
                     name: 'Some other CPU',
                     img_src: 'https://placehold.it/500',
                     img_alt: 'Placeholder 500x500px',
-                    price: '500,00',
-                    category: 'GFX'
+                    price: 500.99,
+                    category: 'GFX',
                 }
             }
         }
