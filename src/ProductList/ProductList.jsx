@@ -20,6 +20,13 @@ export default class ProductList extends React.Component {
                     img_alt: 'Placeholder 500x500px',
                     price: 500.99,
                     category: 'GFX',
+                },
+                2: {
+                    name: 'Some other CfahaflasdsaPU',
+                    img_src: 'https://placehold.it/500',
+                    img_alt: 'Placeholder 500x500px',
+                    price: 500.99,
+                    category: 'GFX',
                 }
             }
         }
@@ -58,7 +65,7 @@ export default class ProductList extends React.Component {
                     category: 'CPU',
                 },
                 1: {
-                    name: 'Some othesADASDASr CPU',
+                    name: 'Some other CPU',
                     img_src: 'https://placehold.it/500',
                     img_alt: 'Placeholder 500x500px',
                     price: 500.99,
@@ -69,14 +76,18 @@ export default class ProductList extends React.Component {
     };
 
     render() {
+        let productsHtml = [];
+        for (const index in this.state.products) {
+            let product = this.state.products[index];
+            productsHtml.push(<ProductListItem data={product}/>);
+        }
         return (
             <div>
                 <h2>Available products</h2>
                 <div class="list-group product-list">
                     <input type="text" onChange={this.changeName} />
                     <button type="button" onClick={this.changeProduct}>Change product</button>
-                    <ProductListItem data={this.state.products["0"]}/>
-                    <ProductListItem data={this.state.products["1"]}/>
+                    {productsHtml}
                 </div>
             </div>
         );
