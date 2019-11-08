@@ -7,11 +7,11 @@ class ProductListItemCategory extends React.Component {
     }
 
     render() {
-        let result = () => {return 'CPU'}; // anonymous function
+        let category = this.props.category;
         return (
             <div>
                 <div class="product-list-item-header">
-                    <div class="badge badge-dark">{result()}</div>
+                    <div class="badge badge-dark">{category}</div>
                 </div>
             </div>
         );
@@ -24,8 +24,9 @@ class ProductListItemImage extends React.Component {
     }
 
     render() {
-        let data = this.props.data;
-        return <img src={data.img_src} alt={data.img_alt} class="align-self-start mr-3 img-fluid img-thumbnail w-25"/>;
+        let src = this.props.src,
+            alt = this.props.alt;
+        return <img src={src} alt={alt} class="align-self-start mr-3 img-fluid img-thumbnail w-25"/>;
     }
 }
 
@@ -39,10 +40,10 @@ export default class ProductListItem extends React.Component {
         return (
             <div>
                 <div class="list-group-item product-list-item">
-                    <ProductListItemCategory/>
+                    <ProductListItemCategory category={data.category}/>
                     <div class="product-list-item-body mt-1">
                         <div class="media">
-                            <ProductListItemImage data={data}/>
+                            <ProductListItemImage src={data.img_src} alt={data.img_alt}/>
                             <div class="media-body">
                                 <h3 class="h5 mt-0">{data.name}</h3>
                                 <div class="row">
@@ -50,7 +51,7 @@ export default class ProductListItem extends React.Component {
                                         <button class="btn btn-secondary btn-sm product-list-item-body-btn-details" type="button">Details</button>
                                     </div>
                                     <div class="col-6">
-                                        <div class="product-list-item-body-price text-right">414,00&nbsp;&euro;
+                                        <div class="product-list-item-body-price text-right">{data.price}&nbsp;&euro;
                                         </div>
                                     </div>
                                 </div>
