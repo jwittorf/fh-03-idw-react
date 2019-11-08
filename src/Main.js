@@ -1,7 +1,7 @@
 import React from 'react';
 import './bootstrap.min.css';
 import Inventory from "./Inventory";
-import ProductList from "./ProductList";
+import ProductList from "./ProductList/ProductList";
 
 function Main() {
     return (

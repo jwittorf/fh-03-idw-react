@@ -1,6 +1,33 @@
 import React from 'react';
 import ReactDOM from 'react-dom'
 
+class ProductListItemCategory extends React.Component {
+    constructor() {
+        super();
+    }
+
+    render() {
+        let result = () => {return 'CPU'}; // anonymous function
+        return (
+            <div>
+                <div class="product-list-item-header">
+                    <div class="badge badge-dark">{result()}</div>
+                </div>
+            </div>
+        );
+    }
+}
+
+class ProductListItemImage extends React.Component {
+    constructor() {
+        super();
+    }
+
+    render() {
+        return <img src={this.props.data.img_src} alt={this.props.data.img_alt} class="align-self-start mr-3 img-fluid img-thumbnail w-25"/>;
+    }
+}
+
 export default class ProductListItem extends React.Component {
     constructor() {
         super();
@@ -10,12 +37,10 @@ export default class ProductListItem extends React.Component {
         return (
             <div>
                 <div class="list-group-item product-list-item">
-                    <div class="product-list-item-header">
-                        <div class="badge badge-dark">CPU</div>
-                    </div>
+                    <ProductListItemCategory/>
                     <div class="product-list-item-body mt-1">
-                        <div class="media"><img src="https://placehold.it/250" alt="Placeholder 250x250px"
-                                                class="align-self-start mr-3 img-fluid img-thumbnail w-25"/>
+                        <div class="media">
+                            <ProductListItemImage data={this.props.data}/>
                             <div class="media-body">
                                 <h3 class="h5 mt-0">Intel Core i7-9700K</h3>
                                 <div class="row">
