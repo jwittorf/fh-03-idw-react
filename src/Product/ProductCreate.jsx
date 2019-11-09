@@ -128,17 +128,17 @@ export default class ProductCreate extends React.Component {
                         options={this.state.formCategory.options} selected={this.state.formCategory.selected}
                         onChangeHandler={this.formInputChangeHandler}/>
                 <InputText label="Name" id="formName" name="name" onChangeHandler={this.formInputChangeHandler}/>
-                <p>Image:</p>
+                <label for="formImageAddonLabel">Image:</label>
                 <div class="input-group mb-3">
                     <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="inputGroupFile02"/>
-                        <label class="custom-file-label" for="inputGroupFile02">Choose file</label>
+                        <input type="file" class="custom-file-input" id="formImage"/>
+                        <label class="custom-file-label" for="formImage">Choose file from your computer</label>
                     </div>
                     <div class="input-group-append">
-                        <span class="input-group-text" id="">Upload</span>
+                        <span class="input-group-text" id="formImageAddonUrl">Import from URL</span>
                     </div>
                     <div class="input-group-append">
-                        <span class="input-group-text" id="">API</span>
+                        <span class="input-group-text" id="formImageAddonApi">Get images from API</span>
                     </div>
                 </div>
                 <InputTextarea label="Description" id="formDescription" name="description" rows="5"
