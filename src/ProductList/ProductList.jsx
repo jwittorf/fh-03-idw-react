@@ -1,34 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import ProductListItem from "../ProductListItem/ProductListItem";
+import {productDB} from "./ProductListDB";
 
 export default class ProductList extends React.Component {
     constructor() {
         super();
         this.state = {
-            products: {
-                0: {
-                    name: 'Intel Core i7-9700K',
-                    img_src: 'https://placehold.it/250',
-                    img_alt: 'Placeholder 250x250px',
-                    price: 414,
-                    category: 'CPU',
-                },
-                1: {
-                    name: 'Some other CPU',
-                    img_src: 'https://placehold.it/500',
-                    img_alt: 'Placeholder 500x500px',
-                    price: 500.99,
-                    category: 'GFX',
-                },
-                2: {
-                    name: 'Some other CfahaflasdsaPU',
-                    img_src: 'https://placehold.it/500',
-                    img_alt: 'Placeholder 500x500px',
-                    price: 500.99,
-                    category: 'GFX',
-                }
-            }
+            products: productDB
         }
     }
 
@@ -76,9 +55,13 @@ export default class ProductList extends React.Component {
     };
 
     render() {
+        let products = this.state.products;
+        if (this.props.products != null){ // if exists
+            products = this.props.products;
+        }
         let productsHtml = [];
-        for (const index in this.state.products) {
-            let product = this.state.products[index];
+        for (const index in products) {
+            let product = products[index];
             productsHtml.push(<ProductListItem data={product}/>);
         }
         return (
