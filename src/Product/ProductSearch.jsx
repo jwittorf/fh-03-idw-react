@@ -17,13 +17,6 @@ export default class ProductSearch extends React.Component {
         let results = {}
         //this logic needs to go to the DB
         results = searchDB(search);
-        for (let key of Object.keys(products)) {
-            let item = products[key];
-            if (item.name.toUpperCase().includes(search.toUpperCase())) {
-                //results.push({key: item});
-                results[key] = item;
-            }
-        }
         return (
             <div>
                 <h1>list of products matching '{search}'</h1>

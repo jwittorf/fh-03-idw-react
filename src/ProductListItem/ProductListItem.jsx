@@ -6,6 +6,11 @@ class ProductListItemCategory extends React.Component {
         super();
     }
 
+    onClick = () => {
+        //CSS style toggle here
+        this.props.toggle();
+    }
+
     render() {
         let category = this.props.category;
         return (
@@ -33,6 +38,13 @@ class ProductListItemImage extends React.Component {
 export default class ProductListItem extends React.Component {
     constructor() {
         super();
+        this.state = {
+            selected: false,
+        }
+    }
+
+    toggleSelect = () => {
+        this.setState({selected: !this.state.selected});
     }
 
     render() {
@@ -42,9 +54,9 @@ export default class ProductListItem extends React.Component {
         return (
             <div>
                 <div class="list-group-item product-list-item">
-                    <ProductListItemCategory category={data.category}/>
+                    <ProductListItemCategory category={data.category} toggle={this.toggleSelect} />
                     <div class="product-list-item-body mt-1">
-                        <div class="media">
+                        <div class="media" onClick={}>
                             <ProductListItemImage src={data.img_src} alt={data.img_alt}/>
                             <div class="media-body">
                                 <h3 class="h5 mt-0">{data.name}</h3>

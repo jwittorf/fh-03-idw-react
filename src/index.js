@@ -5,6 +5,7 @@ import * as serviceWorker from './serviceWorker';
 import {BrowserRouter as Router, Route, Link} from "react-router-dom";
 import About from "./About/About";
 import Contact from "./Contact/Contact";
+import Patient from "./Patient/Patient";
 
 const router = (
     <div>
@@ -20,8 +21,12 @@ const router = (
                     <li>
                         <Link to="/contact">Contact</Link>
                     </li>
+                    <li>
+                        <Link to="/patient">Patient</Link>
+                    </li>
                 </ul>
                 <Route exact path={"/"} component={Main} />
+                <Route path={"/patient"} component={Patient} />
                 <Route path="/about" component={About} />
                 <Route path="/contact" component={Contact} />
             </div>
