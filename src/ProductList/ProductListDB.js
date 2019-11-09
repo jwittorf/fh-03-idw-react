@@ -21,4 +21,18 @@ const productDB = {
             category: 'GFX',
     }
 };
+
+export function searchDB(search){
+    let results = {};
+    for (let key of Object.keys(productDB)) {
+        let item = productDB[key];
+        if (item.name.toUpperCase().includes(search.toUpperCase())) {
+            //results.push({key: item});
+            results[key] = item;
+        }
+    }
+    return results;
+};
+
+
 export {productDB};
