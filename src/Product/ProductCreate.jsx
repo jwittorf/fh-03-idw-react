@@ -1,75 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import InputText from "../Form/InputText";
+import InputTextarea from "../Form/InputTextarea";
+import Select from "../Form/Select";
 
-class InputText extends React.Component {
-    constructor() {
-        super();
-    }
-
-    render() {
-        let label = this.props.label,
-            id = this.props.id,
-            name = this.props.name,
-            onChangeHandler = this.props.onChangeHandler;
-        return (
-            <p class="form-group">
-                <label for={id}>{label}</label>
-                <input type="text" class="form-control" id={id} name={name} onChange={onChangeHandler}/>
-            </p>
-        );
-    }
-}
-
-class InputTextarea extends React.Component {
-    constructor() {
-        super();
-    }
-
-    render() {
-        let label = this.props.label,
-            id = this.props.id,
-            name = this.props.name,
-            rows = this.props.rows,
-            onChangeHandler = this.props.onChangeHandler;
-        return (
-            <p class="form-group">
-                <label for={id}>{label}</label>
-                <textarea class="form-control" id={id} name={name} rows={rows} onChange={onChangeHandler}/>
-            </p>
-        );
-    }
-}
-
-class Select extends React.Component {
-    constructor() {
-        super();
-    }
-
-    render() {
-        let label = this.props.label,
-            id = this.props.id,
-            name = this.props.name,
-            options = this.props.options,
-            selected = this.props.selected,
-            onChangeHandler = this.props.onChangeHandler,
-            optionsHtml = [];
-
-        for (const index in options) {
-            let value = options[index];
-            optionsHtml.push(<option value={index}>{value}</option>)
-        }
-
-        return (
-            <p class="form-group">
-                <label for={id}>{label}</label>
-                <select name={name} class="form-control" id={id} onChange={onChangeHandler}>
-                    <option selected>{selected}</option>
-                    {optionsHtml}
-                </select>
-            </p>
-        );
-    }
-}
 
 export default class ProductCreate extends React.Component {
     constructor() {
