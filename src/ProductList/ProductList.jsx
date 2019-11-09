@@ -13,6 +13,7 @@ export default class ProductList extends React.Component {
                     img_alt: 'Placeholder 250x250px',
                     price: 414,
                     category: 'CPU',
+                    sku: 12345,
                 },
                 1: {
                     name: 'Some other CPU',
@@ -20,6 +21,7 @@ export default class ProductList extends React.Component {
                     // img_alt: 'Placeholder 500x500px',
                     price: 500.99,
                     category: 'GFX',
+                    sku: 6789,
                 },
                 2: {
                     name: 'Some other CfahaflasdsaPU',
@@ -27,6 +29,7 @@ export default class ProductList extends React.Component {
                     img_alt: 'Placeholder 500x500px',
                     price: 500.99,
                     category: 'GFX',
+                    sku: 1337,
                 }
             }
         }

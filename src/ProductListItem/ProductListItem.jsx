@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom'
+import InputText from "../Form/InputText";
 
 class ProductListItemCategory extends React.Component {
     constructor() {
@@ -29,13 +30,26 @@ class ProductListItemImage extends React.Component {
 }
 
 export default class ProductListItem extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
+        this.state = {
+            data: props.data
+        };
+        this.changeSku = this.changeSku.bind(this);
     }
 
+    changeSku = (event) => {
+        this.setState({data: {
+            sku: event.target.value,
+            price: this.state.data.price
+        }});
+    };
+
     render() {
-        let data = this.props.data;
+        let data = this.state.data;
         let price = data.price.toFixed(2);
+        let changerId = "changeInput-" + data.sku;
+        let changerName = "changer-" + data.sku;
         price = price.replace(".", ",");
         if(!data.img_src) {
             data.img_src = 'https://www.motorolasolutions.com/content/dam/msi/images/products/accessories/image_not_available_lg.jpg';
@@ -49,6 +63,7 @@ export default class ProductListItem extends React.Component {
                         <ProductListItemImage src={data.img_src} alt={data.img_alt}/>
                         <div class="media-body">
                             <h3 class="h5 mt-0">{data.name}</h3>
+                            <p><small>SKU: {data.sku}</small></p>
                             <div class="row">
                                 <div class="col-6">
                                     <button class="btn btn-secondary btn-sm product-list-item-body-btn-details" type="button">Details</button>
@@ -58,6 +73,7 @@ export default class ProductListItem extends React.Component {
                                     </div>
                                 </div>
                             </div>
+                            <InputText label="Some input" id={changerId} name={changerName} onChangeHandler={this.changeSku}/>
                         </div>
                     </div>
                     <div class="product-list-item-footer mt-2">
