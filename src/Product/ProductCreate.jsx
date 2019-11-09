@@ -8,7 +8,21 @@ import Select from "../Form/Select";
 export default class ProductCreate extends React.Component {
     constructor() {
         super();
-        this.state = {
+    }
+
+    submitHandler = (event) => {
+        event.preventDefault();
+        console.log(this.state);
+    };
+
+    formInputChangeHandler = (event) => {
+        let name = event.target.name,
+            val = event.target.value;
+        this.setState({[name]: val});
+    };
+
+    render() {
+        let formConfig = {
             formType: {
                 label: 'Type',
                 id: 'formType',
@@ -30,36 +44,14 @@ export default class ProductCreate extends React.Component {
                     motherboard: 'Motherboard'
                 }
             },
-            formData: []
-        }
-    }
-
-    submitHandler = (event) => {
-        event.preventDefault();
-        console.log(this.state.formData);
-        // alert("Form submitted");
-
-    };
-
-    formInputChangeHandler = (event) => {
-        let name = event.target.name,
-            val = event.target.value;
-        // eslint-disable-next-line react/no-direct-mutation-state
-        this.state.formData[name] = val;
-        // this.setState({formData: {[name]: val}}, function () {
-        //     console.log(this.state);
-        //     console.log(this.state.formData);
-        // });
-    };
-
-    render() {
+        };
         return (
             <form onSubmit={this.submitHandler}>
-                <Select label={this.state.formType.label} id={this.state.formType.id} name={this.state.formType.name}
-                        options={this.state.formType.options} selected={this.state.formType.selected}
+                <Select label={formConfig.formType.label} id={formConfig.formType.id} name={formConfig.formType.name}
+                        options={formConfig.formType.options} selected={formConfig.formType.selected}
                         onChangeHandler={this.formInputChangeHandler}/>
-                <Select label={this.state.formCategory.label} id={this.state.formCategory.id} name={this.state.formCategory.name}
-                        options={this.state.formCategory.options} selected={this.state.formCategory.selected}
+                <Select label={formConfig.formCategory.label} id={formConfig.formCategory.id} name={formConfig.formCategory.name}
+                        options={formConfig.formCategory.options} selected={formConfig.formCategory.selected}
                         onChangeHandler={this.formInputChangeHandler}/>
                 <InputText label="Name" id="formName" name="name" onChangeHandler={this.formInputChangeHandler}/>
                 <label for="formImageAddonLabel">Image:</label>
