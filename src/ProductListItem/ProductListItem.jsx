@@ -37,6 +37,10 @@ export default class ProductListItem extends React.Component {
         let data = this.props.data;
         let price = data.price.toFixed(2);
         price = price.replace(".", ",");
+        if(!data.img_src) {
+            data.img_src = 'https://www.motorolasolutions.com/content/dam/msi/images/products/accessories/image_not_available_lg.jpg';
+            data.img_alt = "No image available";
+        }
         return (
             <div class="list-group-item product-list-item">
                 <ProductListItemCategory category={data.category}/>

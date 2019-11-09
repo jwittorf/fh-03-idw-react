@@ -16,8 +16,8 @@ export default class ProductList extends React.Component {
                 },
                 1: {
                     name: 'Some other CPU',
-                    img_src: 'https://placehold.it/500',
-                    img_alt: 'Placeholder 500x500px',
+                    // img_src: 'https://placehold.it/500',
+                    // img_alt: 'Placeholder 500x500px',
                     price: 500.99,
                     category: 'GFX',
                 },
@@ -80,14 +80,15 @@ export default class ProductList extends React.Component {
             let product = this.state.products[index];
             productsHtml.push(<ProductListItem data={product}/>);
         }
+        // productsHtml = false;
         return (
             <div>
                 <h2>Available products</h2>
-                <div class="list-group product-list">
+                {productsHtml && <div class="list-group product-list">
                     <input type="text" onChange={this.changeName} />
                     <button type="button" onClick={this.changeProduct}>Change product</button>
                     {productsHtml}
-                </div>
+                </div>} <p class="alert alert-danger">No products available!</p>
             </div>
         );
     }
