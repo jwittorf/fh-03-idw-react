@@ -8,10 +8,8 @@ export default class Inventory extends React.Component {
 
     render() {
         return (
-            <div>
-                <div class="page-header">
-                    <h1>Inventory management with ReactJS</h1>
-                </div>
+            <div class="page-header">
+                <h1>Inventory management with ReactJS</h1>
             </div>
         );
     }
