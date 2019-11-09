@@ -48,6 +48,13 @@ export default class ProductList extends React.Component {
                     img_alt: 'Placeholder 500x500px',
                     price: 500.99,
                     category: 'GFX',
+                },
+                2: {
+                    name: 'Some other Cfahaffh209rhqdoflasdsaPU',
+                    img_src: 'https://placehold.it/500',
+                    img_alt: 'Placeholder 500x500px',
+                    price: 500.99,
+                    category: 'GFX',
                 }
             }
         });
@@ -65,6 +72,13 @@ export default class ProductList extends React.Component {
                 },
                 1: {
                     name: 'Some other CPU',
+                    img_src: 'https://placehold.it/500',
+                    img_alt: 'Placeholder 500x500px',
+                    price: 500.99,
+                    category: 'GFX',
+                },
+                2: {
+                    name: 'Some other CfahaflasdsaPU',
                     img_src: 'https://placehold.it/500',
                     img_alt: 'Placeholder 500x500px',
                     price: 500.99,
