@@ -18,18 +18,62 @@ class InputText extends React.Component {
             </div>
         );
     }
-
 }
 
-export default class ProductCreate extends React.Component {
+class Select extends React.Component {
     constructor() {
         super();
     }
 
     render() {
+        let label = this.props.label,
+            id = this.props.id,
+            name = this.props.name,
+            options = this.props.options,
+            optionsHtml = [];
+
+        console.log(options);
+        for (const index in options) {
+            let value = options[index];
+            console.log(index);
+            console.log(value);
+            optionsHtml.push(<option value={index}>{value}</option>)
+        }
         return (
             <div>
-                <form>
+                <p class="form-group">
+                    <label for={id}>{label}</label>
+                    <select name={name} class="form-control" id={id}>
+                        {optionsHtml}
+                    </select>
+                </p>
+            </div>
+        );
+    }
+}
+
+export default class ProductCreate extends React.Component {
+    constructor() {
+        super();
+        this.state = {
+            formType: {
+                options: {
+                    simple: 'Simple',
+                    bundle: 'Bundle'
+                }
+            }
+        }
+    }
+
+    submitHandler = (event) => {
+        alert("Form submitted");
+    };
+
+    render() {
+        return (
+            <div>
+                <form onSubmit={this.submitHandler}>
+                    <Select label="Type" id="formType" name="type" options={this.state.formType.options}/>
                     <p>Type: <select name="type">
                         <option>Simple</option>
                         <option>Bundle</option>
@@ -55,8 +99,9 @@ export default class ProductCreate extends React.Component {
                         <label for="description">Description:</label>
                         <textarea class="form-control" rows="5" id="description"/>
                     </div>
-                    <InputText label="Price" id="formName"/>
-                    <InputText label="SKU" id="formName"/>
+                    <InputText label="Price" id="formPrice"/>
+                    <InputText label="SKU" id="formSku"/>
+                    <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
             </div>
         );

@@ -33,7 +33,6 @@ export default class ProductList extends React.Component {
     }
 
     changeProduct = () => {
-        alert("Button clicked");
         this.setState({
             products: {
                 0: {
