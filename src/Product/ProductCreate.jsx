@@ -79,12 +79,14 @@ export default class ProductCreate extends React.Component {
                     gfx: 'Graphiccard',
                     motherboard: 'Motherboard'
                 }
-            }
+            },
+            formData: []
         }
     }
 
     submitHandler = (event) => {
         event.preventDefault();
+        console.log(this.state.formData);
         // alert("Form submitted");
 
     };
@@ -92,10 +94,12 @@ export default class ProductCreate extends React.Component {
     formInputChangeHandler = (event) => {
         let name = event.target.name,
             val = event.target.value;
-        this.setState({formData: {[name]: val}}, function () {
-            console.log(this.state);
-            console.log(this.state.formData);
-        });
+        // eslint-disable-next-line react/no-direct-mutation-state
+        this.state.formData[name] = val;
+        // this.setState({formData: {[name]: val}}, function () {
+        //     console.log(this.state);
+        //     console.log(this.state.formData);
+        // });
     };
 
     render() {
