@@ -1,5 +1,5 @@
 import React from 'react';
-import './bootstrap.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css'
 import Inventory from "./Inventory";
 import ProductList from "./ProductList/ProductList";
 import ProductCreate from "./Product/ProductCreate";
