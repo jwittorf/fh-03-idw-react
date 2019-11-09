@@ -30,13 +30,11 @@ class Select extends React.Component {
             id = this.props.id,
             name = this.props.name,
             options = this.props.options,
+            selected = this.props.selected,
             optionsHtml = [];
 
-        console.log(options);
         for (const index in options) {
             let value = options[index];
-            console.log(index);
-            console.log(value);
             optionsHtml.push(<option value={index}>{value}</option>)
         }
         return (
@@ -44,6 +42,7 @@ class Select extends React.Component {
                 <p class="form-group">
                     <label for={id}>{label}</label>
                     <select name={name} class="form-control" id={id}>
+                        <option selected>{selected}</option>
                         {optionsHtml}
                     </select>
                 </p>
@@ -57,9 +56,24 @@ export default class ProductCreate extends React.Component {
         super();
         this.state = {
             formType: {
+                label: 'Type',
+                id: 'formType',
+                name: 'type',
+                selected: 'Please select a type.',
                 options: {
                     simple: 'Simple',
                     bundle: 'Bundle'
+                }
+            },
+            formCategory: {
+                label: 'Category',
+                id: 'formCategory',
+                name: 'category',
+                selected: 'Please select a category.',
+                options: {
+                    cpu: 'CPU',
+                    gfx: 'Graphiccard',
+                    motherboard: 'Motherboard'
                 }
             }
         }
@@ -73,14 +87,10 @@ export default class ProductCreate extends React.Component {
         return (
             <div>
                 <form onSubmit={this.submitHandler}>
-                    <Select label="Type" id="formType" name="type" options={this.state.formType.options}/>
-                    <p>Type: <select name="type">
-                        <option>Simple</option>
-                        <option>Bundle</option>
-                    </select></p>
-                    <p>Category: <select name="category">
-                        <option>CPU</option>
-                    </select></p>
+                    <Select label={this.state.formType.label} id={this.state.formType.id} name={this.state.formType.name}
+                            options={this.state.formType.options} selected={this.state.formType.selected}/>
+                    <Select label={this.state.formCategory.label} id={this.state.formCategory.id} name={this.state.formCategory.name}
+                            options={this.state.formCategory.options} selected={this.state.formCategory.selected}/>
                     <InputText label="Name" id="formName"/>
                     <p>Image:</p>
                     <div class="input-group mb-3">
