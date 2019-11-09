@@ -1,0 +1,11 @@
+.selected > .list-group-item{
+    opacity: 85%;
+}
+.selected {
+    background: #0f6674;
+}
+
+
+.active {
+
+}

@@ -1,14 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom'
+import "./ProductListItem.css"
 
 class ProductListItemCategory extends React.Component {
     constructor() {
         super();
-    }
-
-    onClick = () => {
-        //CSS style toggle here
-        this.props.toggle();
     }
 
     render() {
@@ -45,18 +41,22 @@ export default class ProductListItem extends React.Component {
 
     toggleSelect = () => {
         this.setState({selected: !this.state.selected});
-    }
+    };
 
     render() {
         let data = this.props.data;
         let price = data.price.toFixed(2);
         price = price.replace(".", ",");
+        let className = "unselected";
+        if (this.state.selected){
+            className = "selected";
+        }
         return (
-            <div>
+            <div class={className} onClick={this.toggleSelect}>
                 <div class="list-group-item product-list-item">
-                    <ProductListItemCategory category={data.category} toggle={this.toggleSelect} />
+                    <ProductListItemCategory category={data.category} />
                     <div class="product-list-item-body mt-1">
-                        <div class="media" onClick={}>
+                        <div class="media">
                             <ProductListItemImage src={data.img_src} alt={data.img_alt}/>
                             <div class="media-body">
                                 <h3 class="h5 mt-0">{data.name}</h3>
