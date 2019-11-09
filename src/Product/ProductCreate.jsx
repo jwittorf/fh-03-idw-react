@@ -22,6 +22,28 @@ class InputText extends React.Component {
     }
 }
 
+class InputTextarea extends React.Component {
+    constructor() {
+        super();
+    }
+
+    render() {
+        let label = this.props.label,
+            id = this.props.id,
+            name = this.props.name,
+            rows = this.props.rows,
+            onChangeHandler = this.props.onChangeHandler;
+        return (
+            <div>
+                <p class="form-group">
+                    <label for={id}>{label}</label>
+                    <textarea class="form-control" id={id} name={name} rows={rows} onChange={onChangeHandler}/>
+                </p>
+            </div>
+        );
+    }
+}
+
 class Select extends React.Component {
     constructor() {
         super();
@@ -126,10 +148,8 @@ export default class ProductCreate extends React.Component {
                             <span class="input-group-text" id="">API</span>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="description">Description:</label>
-                        <textarea class="form-control" rows="5" id="description"/>
-                    </div>
+                    <InputTextarea label="Description" id="formDescription" name="description" rows="5"
+                                   onChangeHandler={this.formInputChangeHandler}/>
                     <InputText label="Price" id="formPrice" name="price" onChangeHandler={this.formInputChangeHandler}/>
                     <InputText label="SKU" id="formSku" name="sku" onChangeHandler={this.formInputChangeHandler}/>
                     <button type="submit" class="btn btn-primary">Submit</button>
