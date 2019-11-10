@@ -5,6 +5,9 @@ import InputTextarea from "../Form/InputTextarea";
 import Select from "../Form/Select";
 import ProductList from "../ProductList/ProductList";
 
+import $ from "jquery";
+import "popper.js";
+import "bootstrap";
 
 export default class ProductCreate extends React.Component {
     constructor() {
