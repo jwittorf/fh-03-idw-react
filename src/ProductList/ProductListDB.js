@@ -1,3 +1,4 @@
+
 const productDB = {
     0: {
         name: 'Intel Core i7-9700K',
@@ -22,7 +23,7 @@ const productDB = {
     }
 };
 
-export function searchDB(search){
+export function searchDB (search){
     let results = {};
     for (let key of Object.keys(productDB)) {
         let item = productDB[key];
@@ -32,7 +33,20 @@ export function searchDB(search){
         }
     }
     return results;
-};
+}
+
+export function addDB (product){
+    if (validate(product)){
+        productDB[Object.keys(productDB).length+1] = product;
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function validate(product){
+    return true;
+}
 
 
 export {productDB};

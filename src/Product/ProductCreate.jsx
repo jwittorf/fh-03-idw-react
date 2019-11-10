@@ -2,7 +2,7 @@ import React from 'react';
 import ProductSearch from "./ProductSearch";
 import ProductListItem from "../ProductListItem/ProductListItem";
 import ProductList from "../ProductList/ProductList";
-import {productDB} from "../ProductList/ProductListDB";
+import {addDB, productDB} from "../ProductList/ProductListDB";
 
 class InputText extends React.Component {
     constructor(props) {
@@ -101,15 +101,9 @@ export default class ProductCreate extends React.Component {
                     <InputText label="Price" id="formName" onChange={this.handlePrice} value={this.state.cProduct.price}/>
                     <InputText label="SKU" id="formName" onChange={this.handleSKU} value={this.state.cProduct.SKU}/>
                     <InputText type="text" label="Items" onChange={this.handleChange} value={this.state.itemSearch} id="formName" />
-                    <input id="show-selected-item-names" value={
-                        names.map((index) => {
-                            return(
-                                index
-                            )
-                        })
-                    }></input>
                     <ProductList class="minimal-list" displayStyle="minimal" products={this.state.selectedItems} methods={methods}/>
                     <ProductSearch search={this.state.itemSearch} onChange={this.handleChange} methods={methods} />
+                    <button type="submit">submission</button>
                 </form>
             </div>
         );
@@ -136,10 +130,12 @@ export default class ProductCreate extends React.Component {
     }
 
     handleSubmit = (event) => {
-        let newProduct = Object.assign({}, this.state.cProduct);
-        newProduct.contains = this.state.selectedItems;
-        this.setState({cProduct: newProduct});
-        alert(this.state.value);
+        console.log("submitted!");
+        console.log(this.state.cProduct);
+        addDB(this.state.cProduct);
+        this.setState({
+            cProduct: new Product()
+        });
         event.preventDefault();
     }
 
@@ -183,11 +179,11 @@ export default class ProductCreate extends React.Component {
 }
 
 class Product{
-    name;
-    img_src;
-    img_alt;
-    price;
-    category;
-    SKU;
+    name = "test";
+    img_src = "./test/test.jpg";
+    img_alt = 'Placeholder 500x500px';
+    price = 200;
+    category = "CPU";
+    SKU = 234232;
     contains;
 }

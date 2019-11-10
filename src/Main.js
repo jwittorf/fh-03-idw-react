@@ -3,8 +3,10 @@ import './bootstrap.min.css';
 import Inventory from "./Inventory";
 import ProductList from "./ProductList/ProductList";
 import ProductCreate from "./Product/ProductCreate";
+import {productDB} from "./ProductList/ProductListDB";
 
 function Main() {
+    let products = productDB;
     return (
         <div class="container">
             <Inventory/>
