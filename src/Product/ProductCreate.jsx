@@ -104,7 +104,7 @@ export default class ProductCreate extends React.Component {
             }
             categoriesHtml.push(additionalAttributesHtml);
         }
-        let additionalInformation = (this.state.type === 'bundle') ? <ProductList/> : categoriesHtml;
+        let additionalInformation = (this.state.type === 'bundle') ? <ProductList/> : (this.state.type === 'simple') ? categoriesHtml : null;
         let formImageApiModalBody = <ImageApiGrid query={this.state.name}/>;
         return (
             <form onSubmit={this.submitHandler}>
@@ -134,7 +134,6 @@ export default class ProductCreate extends React.Component {
                 <InputText label="SKU" id="formSku" name="sku" onChangeHandler={this.formInputChangeHandler}/>
                 {additionalInformation}
                 <button type="submit" class="btn btn-primary">Submit</button>
-                {/*<Modal id="formImageAddonApiModal" title="Import image from API" body="<p>Body content</p>"/>*/}
                 <Modal id="formImageAddonApiModal" title="Import image from API" body={formImageApiModalBody}/>
             </form>
         );
