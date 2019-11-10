@@ -3,16 +3,26 @@ import ReactDOM from 'react-dom';
 import InputText from "../Form/InputText";
 import InputTextarea from "../Form/InputTextarea";
 import Select from "../Form/Select";
+import ProductList from "../ProductList/ProductList";
 
 
 export default class ProductCreate extends React.Component {
     constructor() {
         super();
+        this.reference = React.createRef();
+        this.state = {
+            // for conditional information about bundle and configuration
+            type: null,
+            category: null
+        };
     }
 
     submitHandler = (event) => {
         event.preventDefault();
-        console.log(this.state);
+        if (!this.reference.current.files[0]) {
+            // TODO: test this
+            // no image uploaded
+        }
     };
 
     formInputChangeHandler = (event) => {
@@ -100,11 +110,8 @@ export default class ProductCreate extends React.Component {
                 <label for="formImageAddonLabel">Image:</label>
                 <div class="input-group mb-3">
                     <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="formImage"/>
+                        <input type="file" class="custom-file-input" id="formImage" ref={this.reference}/>
                         <label class="custom-file-label" for="formImage">Choose file from your computer</label>
-                    </div>
-                    <div class="input-group-append">
-                        <span class="input-group-text" id="formImageAddonUrl">Import from URL</span>
                     </div>
                     <div class="input-group-append">
                         <span class="input-group-text" id="formImageAddonApi">Get images from API</span>
