@@ -62,7 +62,7 @@ export default class ProductList extends React.Component {
         let productsHtml = [];
         for (const index in products) {
             let product = products[index];
-            productsHtml.push(<ProductListItem data={product}/>);
+            productsHtml.push(<ProductListItem data={product} methods={this.props.methods} />);
         }
         return (
             <div>

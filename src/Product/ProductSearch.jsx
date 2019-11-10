@@ -20,7 +20,7 @@ export default class ProductSearch extends React.Component {
         return (
             <div>
                 <h1>list of products matching '{search}'</h1>
-                <ProductList products={results}/>
+                <ProductList products={results} methods={this.props.methods}/>
             </div>
         );
     }

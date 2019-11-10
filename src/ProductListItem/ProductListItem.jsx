@@ -40,7 +40,10 @@ export default class ProductListItem extends React.Component {
     }
 
     toggleSelect = () => {
-        this.setState({selected: !this.state.selected});
+        if (this.props.methods != null) {
+            this.setState({selected: !this.state.selected});
+            this.props.methods["callbackState"](this.props.data);
+        }
     };
 
     render() {

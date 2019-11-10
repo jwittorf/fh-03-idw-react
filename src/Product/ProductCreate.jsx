@@ -1,5 +1,7 @@
 import React from 'react';
 import ProductSearch from "./ProductSearch";
+import ProductListItem from "../ProductListItem/ProductListItem";
+import ProductList from "../ProductList/ProductList";
 
 class InputText extends React.Component {
     constructor(props) {
@@ -29,13 +31,41 @@ export default class ProductCreate extends React.Component {
         super(props);
         this.state = {
             itemSearch: 'Some other CPU',
-            results: {}
+            results: {},
+            selectedItems: [],
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     render() {
+        let methods = {
+            "onClick": function() {
+                this.setState({selected: !this.state.selected});
+                this.props.callbackState(this.props.data);
+            },
+            "callbackState": (item) => {
+                console.log(this.state.selectedItems.indexOf(item));
+                let selectedItems = [...this.state.selectedItems];
+                if ( selectedItems.indexOf(item) == -1) {
+                    console.log("item is not in array");
+                    selectedItems.push(item);
+
+                } else {
+                    console.log("item was in array");
+                    selectedItems.splice(selectedItems.indexOf(item), 1);
+                }
+                console.log(selectedItems);
+                this.setState({
+                    selectedItems: selectedItems
+                });
+            }
+        };
+        let names =  [];
+        for (let index in this.state.selectedItems){
+            console.log(this.state.selectedItems[index]);
+            names.push(this.state.selectedItems[index].name);
+        }
         return (
             <div>
                 <form onSubmit={this.handleSubmit} handleChange={this.handleChange} post={this.state.post} handleSubmit={this.handleSubmit}>
@@ -67,7 +97,15 @@ export default class ProductCreate extends React.Component {
                     <InputText label="Price" id="formName"/>
                     <InputText label="SKU" id="formName"/>
                     <InputText type="text" label="Items" onChange={this.handleChange} value={this.state.itemSearch} id="formName"/>
-                    <ProductSearch search={this.state.itemSearch}/>
+                    <input id="show-selected-item-names" value={
+                        names.map((index) => {
+                            return(
+                                index
+                            )
+                        })
+                    }></input>
+                    <ProductList displayStyle="minimal" products={this.state.selectedItems} methods={methods}/>
+                    <ProductSearch search={this.state.itemSearch} onChange={this.handleChange} methods={methods}/>
                 </form>
             </div>
         );
