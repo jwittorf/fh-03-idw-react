@@ -16,7 +16,6 @@ export default class Select extends React.Component {
             optionsHtml = [];
 
         for (const index in options) {
-            // console.log(options[index]);
             let value = options[index]['label'];
             optionsHtml.push(<option value={index}>{value}</option>)
         }

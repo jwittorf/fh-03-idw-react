@@ -93,7 +93,6 @@ export default class ProductCreate extends React.Component {
                 let id = index + "-" + kndex;
                 id.toLowerCase();
                 additionalAttributesHtml.push(<InputText label={additionalAttribute} id={id}/>);
-                console.log(additionalAttribute);
             }
             categoriesHtml.push(additionalAttributesHtml);
         }
