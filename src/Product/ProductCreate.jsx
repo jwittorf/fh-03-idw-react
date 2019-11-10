@@ -4,7 +4,8 @@ import InputText from "../Form/InputText";
 import InputTextarea from "../Form/InputTextarea";
 import Select from "../Form/Select";
 import ProductList from "../ProductList/ProductList";
-
+import Modal from "../Modal/Modal";
+import ImageApiGrid from "../Api/ImageApiGrid";
 import $ from "jquery";
 import "popper.js";
 import "bootstrap";
@@ -35,6 +36,10 @@ export default class ProductCreate extends React.Component {
         if (name === 'type' && val === 'bundle') {
             // alert("BUNDLE");
         }
+    };
+
+    showformImageAddonApiModal = (target) => {
+        $(target).modal('show');
     };
 
     render() {
@@ -100,6 +105,7 @@ export default class ProductCreate extends React.Component {
             categoriesHtml.push(additionalAttributesHtml);
         }
         let additionalInformation = (this.state.type === 'bundle') ? <ProductList/> : categoriesHtml;
+        let formImageApiModalBody = <ImageApiGrid query={this.state.name}/>;
         return (
             <form onSubmit={this.submitHandler}>
                 <Select label={formConfig.formType.label} id={formConfig.formType.id} name={formConfig.formType.name}
@@ -116,7 +122,10 @@ export default class ProductCreate extends React.Component {
                         <label class="custom-file-label" for="formImage">Choose file from your computer</label>
                     </div>
                     <div class="input-group-append">
-                        <span class="input-group-text" id="formImageAddonApi">Get images from API</span>
+                        <span class="input-group-text btn btn-secondary" id="formImageAddonApi"
+                              onClick={this.showformImageAddonApiModal.bind(this, "#formImageAddonApiModal")}>
+                            Get images from API
+                        </span>
                     </div>
                 </div>
                 <InputTextarea label="Description" id="formDescription" name="description" rows="5"
@@ -125,6 +134,8 @@ export default class ProductCreate extends React.Component {
                 <InputText label="SKU" id="formSku" name="sku" onChangeHandler={this.formInputChangeHandler}/>
                 {additionalInformation}
                 <button type="submit" class="btn btn-primary">Submit</button>
+                {/*<Modal id="formImageAddonApiModal" title="Import image from API" body="<p>Body content</p>"/>*/}
+                <Modal id="formImageAddonApiModal" title="Import image from API" body={formImageApiModalBody}/>
             </form>
         );
     }
