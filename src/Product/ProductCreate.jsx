@@ -19,6 +19,9 @@ export default class ProductCreate extends React.Component {
         let name = event.target.name,
             val = event.target.value;
         this.setState({[name]: val});
+        if (name === 'type' && val === 'bundle') {
+            // alert("BUNDLE");
+        }
     };
 
     render() {
@@ -29,8 +32,12 @@ export default class ProductCreate extends React.Component {
                 name: 'type',
                 selected: 'Please select a type.',
                 options: {
-                    simple: 'Simple',
-                    bundle: 'Bundle'
+                    simple: {
+                        label: 'Simple'
+                    },
+                    bundle: {
+                        label: 'Bundle'
+                    },
                 }
             },
             formCategory: {
@@ -39,12 +46,48 @@ export default class ProductCreate extends React.Component {
                 name: 'category',
                 selected: 'Please select a category.',
                 options: {
-                    cpu: 'CPU',
-                    gfx: 'Graphiccard',
-                    motherboard: 'Motherboard'
+                    cpu: {
+                        label: 'CPU',
+                        attributes: {
+                            clockFreq: 'Clock frequency',
+                            cores: 'Cores',
+                            socket: 'Socket',
+                        }
+                    },
+                    gfx: {
+                        label: 'Graphics card',
+                        attributes: {
+                            chip: 'GFX Chip',
+                            storage: 'Storage',
+                            slots: 'Used slots'
+                        }
+                    },
+                    motherboard: {
+                        label: 'Mainboard',
+                        attributes: {
+                            factor: 'Form factor',
+                            gfx: 'Graphics',
+                            socket: 'Socket'
+                        }
+                    },
                 }
             },
         };
+        let categoriesHtml = [];
+        for (const index in formConfig.formCategory.options) {
+            let additionalAttributesHtml = [];
+            let category = formConfig.formCategory.options[index];
+            additionalAttributesHtml.push(<h2>{category.label}</h2>);
+            for (const kndex in category.attributes) {
+                let additionalAttribute = category.attributes[kndex];
+                let id = index + "-" + kndex;
+                id.toLowerCase();
+                additionalAttributesHtml.push(<InputText label={additionalAttribute} id={id}/>);
+                console.log(additionalAttribute);
+            }
+            categoriesHtml.push(additionalAttributesHtml);
+        }
+        let additionalInformation = (this.state.type === 'bundle') ? <ProductList/> : categoriesHtml;
         return (
             <form onSubmit={this.submitHandler}>
                 <Select label={formConfig.formType.label} id={formConfig.formType.id} name={formConfig.formType.name}
@@ -71,6 +114,7 @@ export default class ProductCreate extends React.Component {
                                onChangeHandler={this.formInputChangeHandler}/>
                 <InputText label="Price" id="formPrice" name="price" onChangeHandler={this.formInputChangeHandler}/>
                 <InputText label="SKU" id="formSku" name="sku" onChangeHandler={this.formInputChangeHandler}/>
+                {additionalInformation}
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         );
