@@ -2,6 +2,7 @@ import React from 'react';
 import ProductSearch from "./ProductSearch";
 import ProductListItem from "../ProductListItem/ProductListItem";
 import ProductList from "../ProductList/ProductList";
+import {productDB} from "../ProductList/ProductListDB";
 
 class InputText extends React.Component {
     constructor(props) {
@@ -17,7 +18,7 @@ class InputText extends React.Component {
             <div>
                 <p class="form-group">
                     <label for={id}>{label}</label>
-                    <input type="text" class="form-control" id={id} value={value} onChange={onChange}/>
+                    <input type="text" class="form-control" id={id} value={value} onChange={onChange} />
                 </p>
             </div>
         );
@@ -32,10 +33,9 @@ export default class ProductCreate extends React.Component {
         this.state = {
             itemSearch: 'Some other CPU',
             results: {},
-            selectedItems: [],
+            selectedItems: {},
+            cProduct: new Product,
         };
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     render() {
@@ -44,28 +44,32 @@ export default class ProductCreate extends React.Component {
                 this.setState({selected: !this.state.selected});
                 this.props.callbackState(this.props.data);
             },
-            "callbackState": (item) => {
-                console.log(this.state.selectedItems.indexOf(item));
-                let selectedItems = [...this.state.selectedItems];
-                if ( selectedItems.indexOf(item) == -1) {
+            "callbackState": (pair, selected) => {
+                let index = pair["key"];
+                let item = pair["value"];
+                let object = {index: item};
+                let selectedItems = Object.assign({}, this.state.selectedItems);
+                if (!selected) {
                     console.log("item is not in array");
-                    selectedItems.push(item);
-
+                    selectedItems[index] = item;
                 } else {
                     console.log("item was in array");
-                    selectedItems.splice(selectedItems.indexOf(item), 1);
+                    delete selectedItems[index];
                 }
                 console.log(selectedItems);
+                this.state.cProduct.contains = selectedItems;
                 this.setState({
                     selectedItems: selectedItems
                 });
             }
         };
         let names =  [];
-        for (let index in this.state.selectedItems){
-            console.log(this.state.selectedItems[index]);
-            names.push(this.state.selectedItems[index].name);
-        }
+        Object.keys(this.state.selectedItems).forEach( (item) => {
+                console.log(item);
+                names.push(item.name);
+        });
+
+
         return (
             <div>
                 <form onSubmit={this.handleSubmit} handleChange={this.handleChange} post={this.state.post} handleSubmit={this.handleSubmit}>
@@ -76,11 +80,11 @@ export default class ProductCreate extends React.Component {
                     <p>Category: <select name="category">
                         <option>CPU</option>
                     </select></p>
-                    <InputText label="Name" id="formName"/>
+                    <InputText label="Name" id="formName" onChange={this.handleName} value={this.state.cProduct.name}/>
                     <p>Image:</p>
                     <div class="input-group mb-3">
                         <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="inputGroupFile02"/>
+                            <input type="file" class="custom-file-input" id="inputGroupFile02" onChange={this.handleImgUrl} value={this.state.cProduct.img_url}/>
                             <label class="custom-file-label" for="inputGroupFile02">Choose file</label>
                         </div>
                         <div class="input-group-append">
@@ -92,11 +96,11 @@ export default class ProductCreate extends React.Component {
                     </div>
                     <div class="form-group">
                         <label for="description">Description:</label>
-                        <textarea class="form-control" rows="5" id="description"/>
+                        <textarea class="form-control" rows="5" id="description" onChange={this.handleDescription} value={this.state.cProduct.description}/>
                     </div>
-                    <InputText label="Price" id="formName"/>
-                    <InputText label="SKU" id="formName"/>
-                    <InputText type="text" label="Items" onChange={this.handleChange} value={this.state.itemSearch} id="formName"/>
+                    <InputText label="Price" id="formName" onChange={this.handlePrice} value={this.state.cProduct.price}/>
+                    <InputText label="SKU" id="formName" onChange={this.handleSKU} value={this.state.cProduct.SKU}/>
+                    <InputText type="text" label="Items" onChange={this.handleChange} value={this.state.itemSearch} id="formName" />
                     <input id="show-selected-item-names" value={
                         names.map((index) => {
                             return(
@@ -104,19 +108,86 @@ export default class ProductCreate extends React.Component {
                             )
                         })
                     }></input>
-                    <ProductList displayStyle="minimal" products={this.state.selectedItems} methods={methods}/>
-                    <ProductSearch search={this.state.itemSearch} onChange={this.handleChange} methods={methods}/>
+                    <ProductList class="minimal-list" displayStyle="minimal" products={this.state.selectedItems} methods={methods}/>
+                    <ProductSearch search={this.state.itemSearch} onChange={this.handleChange} methods={methods} />
                 </form>
             </div>
         );
     }
 
-    handleChange(event) {
+    createProduct(){
+        let product ={
+            name: this.state.cProduct.name,
+            img_src: this.state.cProduct.img_src,
+            img_alt: this.state.cProduct.img_alt,
+            price: this.state.cProduct.price,
+            category: this.state.cProduct.category,
+            SKU: this.state.cProduct.SKU,
+            description: this.state.cProduct.description,
+        };
+        productDB[Object.keys(productDB).length+1] = product;
+    }
+
+    componentDidMount() {
+    }
+
+    handleChange = (event) => {
         this.setState({itemSearch: event.target.value});
     }
 
-    handleSubmit(event) {
+    handleSubmit = (event) => {
+        let newProduct = Object.assign({}, this.state.cProduct);
+        newProduct.contains = this.state.selectedItems;
+        this.setState({cProduct: newProduct});
         alert(this.state.value);
         event.preventDefault();
     }
+
+    handleName = (event) => {
+        let newProduct = Object.assign({}, this.state.cProduct);
+        newProduct.name = event.target.value;
+        this.setState({cProduct: newProduct});
+    }
+    handlePrice = (event) => {
+        let newProduct = Object.assign({}, this.state.cProduct);
+        newProduct.price = event.target.value;
+        this.setState({cProduct: newProduct});
+    }
+    handleImgUrl = (event) => {
+        let newProduct = Object.assign({}, this.state.cProduct);
+        newProduct.img_url = event.target.value;
+        newProduct.img_alt = 'Placeholder 500x500px';
+        this.setState({cProduct: newProduct});
+    }
+    handleCategory = (event) => {
+        let newProduct = Object.assign({}, this.state.cProduct);
+        newProduct.category = event.target.value;
+        this.setState({cProduct: newProduct});
+    }
+    handleSKU = (event) => {
+        let newProduct = Object.assign({}, this.state.cProduct);
+        newProduct.SKU = event.target.value;
+        this.setState({cProduct: newProduct});
+    }
+    handleDescription = (event) => {
+        let newProduct = Object.assign({}, this.state.cProduct);
+        newProduct.description = event.target.value;
+        this.setState({cProduct: newProduct});
+    }
+    handleContains = (event) => {
+        let newProduct = Object.assign({}, this.state.cProduct);
+        newProduct.contains = event.target.value;
+        this.setState({cProduct: newProduct});
+    }
+
+}
+
+class Product{
+    name;
+    img_src;
+    img_alt;
+    price;
+    category;
+    SKU;
+    contains;
 }

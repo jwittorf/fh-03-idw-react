@@ -1,6 +1,9 @@
 import React from 'react';
 import axios from 'axios';
 import Result from "./Result";
+import {observable} from "mobx";
+import {observer} from "mobx-react";
+
 
 export default class Patient extends React.Component {
     constructor (props){
@@ -45,8 +48,21 @@ export default class Patient extends React.Component {
     }
 
     render(){
+
+        var timerData = observable ({
+            secondsPassed: 0
+        });
+
+        setInterval(() => {
+            timerData.secondsPassed++;
+        }, 1000);
+
+        const Timer = observer(({ timerData }) =>
+            <span>Seconds passed: {timerData.secondsPassed}</span>);
+
         return (
             <div>
+                <Timer timerData={timerData}/>
                 <h1>
                     hello, parent banana is defeated.
                 </h1>
@@ -67,6 +83,33 @@ export default class Patient extends React.Component {
         )
     }
 }
+
+
+//@observer
+class API extends React.Component{
+    constructor(props){
+        super(props);
+        this.state = {
+            results : {
+                name: {
+                    title: '',
+                    first: '',
+                    last: ''
+                }
+            }
+        }
+    }
+
+    render(){
+        return(
+            <div>
+
+            </div>
+        )
+    }
+}
+
+
 class PatientChild extends React.Component {
     constructor (props){
         super(props);
