@@ -10,7 +10,8 @@ export default class ImageApiGrid extends React.Component {
     }
 
     render() {
-        client.search("Intel").then(images => {
+        let name = (this.props.query) ? this.props.query : "Sample image";
+        client.search(name).then(images => {
             console.log(images);
         });
         return (
