@@ -2,33 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom'
 import InputText from "../Form/InputText";
 
-class ProductListItemCategory extends React.Component {
-    constructor() {
-        super();
-    }
-
-    render() {
-        let category = this.props.category;
-        return (
-            <div class="product-list-item-header">
-                <div class="badge badge-dark">{category}</div>
-            </div>
-        );
-    }
-}
-
-class ProductListItemImage extends React.Component {
-    constructor() {
-        super();
-    }
-
-    render() {
-        let src = this.props.src,
-            alt = this.props.alt;
-        return <img src={src} alt={alt} class="align-self-start mr-3 img-fluid img-thumbnail w-25"/>;
-    }
-}
-
 export default class ProductListItem extends React.Component {
     constructor(props) {
         super(props);
@@ -57,10 +30,12 @@ export default class ProductListItem extends React.Component {
         }
         return (
             <div class="list-group-item product-list-item">
-                <ProductListItemCategory category={data.category}/>
+                <div class="product-list-item-header">
+                    <div class="badge badge-dark">{data.category}</div>
+                </div>
                 <div class="product-list-item-body mt-1">
                     <div class="media">
-                        <ProductListItemImage src={data.img_src} alt={data.img_alt}/>
+                        <img src={data.img_src} alt={data.img_alt} class="align-self-start mr-3 img-fluid img-thumbnail w-25"/>
                         <div class="media-body">
                             <h3 class="h5 mt-0">{data.name}</h3>
                             <p><small>SKU: {data.sku}</small></p>
