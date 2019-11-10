@@ -8,15 +8,7 @@ export default class ProductListItem extends React.Component {
         this.state = {
             data: props.data
         };
-        this.changeSku = this.changeSku.bind(this);
     }
-
-    changeSku = (event) => {
-        this.setState({data: {
-            sku: event.target.value,
-            price: this.state.data.price
-        }});
-    };
 
     render() {
         let data = this.state.data;
@@ -48,7 +40,6 @@ export default class ProductListItem extends React.Component {
                                     </div>
                                 </div>
                             </div>
-                            <InputText label="Some input" id={changerId} name={changerName} onChangeHandler={this.changeSku}/>
                         </div>
                     </div>
                     <div class="product-list-item-footer mt-2">
