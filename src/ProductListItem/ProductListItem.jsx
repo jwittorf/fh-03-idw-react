@@ -1,6 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom'
-import InputText from "../Form/InputText";
+import ReactDOM from 'react-dom';
 
 export default class ProductListItem extends React.Component {
     constructor(props) {
@@ -13,8 +12,6 @@ export default class ProductListItem extends React.Component {
     render() {
         let data = this.state.data;
         let price = data.price.toFixed(2);
-        let changerId = "changeInput-" + data.sku;
-        let changerName = "changer-" + data.sku;
         price = price.replace(".", ",");
         if(!data.img_src) {
             data.img_src = 'https://www.motorolasolutions.com/content/dam/msi/images/products/accessories/image_not_available_lg.jpg';
