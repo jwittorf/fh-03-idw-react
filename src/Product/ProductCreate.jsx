@@ -124,7 +124,6 @@ export default class ProductCreate extends React.Component {
     };
 
     handleChange = (event) => {
-        console.log("Change");
         this.setState({itemSearch: event.target.value});
     };
 
@@ -281,7 +280,7 @@ export default class ProductCreate extends React.Component {
                 <div>
                     <h3>Add simple products to this bundle</h3>
                     <ProductList displayStyle="minimal" products={this.state.selectedItems} methods={methods}/>
-                    <InputText type="text" label="Search for product as component" onChange={this.handleChange} value={this.state.itemSearch} id="formName" />
+                    <InputText type="text" label="Search for product as component" onChangeHandler={this.handleChange} value={this.state.itemSearch} id="formName" />
                     <ProductSearch search={this.state.itemSearch} onChange={this.handleChange} methods={methods} />
                 </div>
             );

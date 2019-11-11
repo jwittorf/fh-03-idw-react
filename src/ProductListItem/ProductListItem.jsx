@@ -134,20 +134,22 @@ export default class ProductListItem extends React.Component {
                         <ProductListItemImage src={data.img_src} alt={data.img_alt} displayStyle={this.props.displayStyle} data={this.props.data} />
                         <div class="media-body">
                             <h3 class="h5 mt-0">{data.name}</h3>
-                            <p><small>SKU: {data.sku}</small></p>
                             <div class="row">
-                                <ProductListItemDetails displayStyle={this.props.displayStyle} data={this.props.data} />
+                                {/*<ProductListItemDetails displayStyle={this.props.displayStyle} data={this.props.data} />*/}
                                 {/*<div class="col-6">
                                     <button class="btn btn-secondary btn-sm product-list-item-body-btn-details" type="button">Details</button>
                                 </div>*/}
                                 <div class="col-6">
+                                    <p><small>SKU: {data.sku}</small></p>
+                                </div>
+                                    <div class="col-6">
                                     <div class="product-list-item-body-price text-right">{price}&nbsp;&euro;
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <ProductListItemFooter displayStyle={this.props.displayStyle} data={this.props.data} />
+                    {/*<ProductListItemFooter displayStyle={this.props.displayStyle} data={this.props.data} />*/}
                     {/*<div class="product-list-item-footer mt-2">
                         <div class="btn-group" role="group" aria-label="Actions to manage a product">
                             <button class="btn btn-primary" type="button">Edit</button>
