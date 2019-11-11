@@ -10,15 +10,104 @@ import $ from "jquery";
 import "popper.js";
 import "bootstrap";
 
+const GoogleImages = require('google-images');
+const client = new GoogleImages('011706504980353428457:zgomawhlc9k', 'AIzaSyC-11-nerHKCNJCpFsLTstJtaLDPpci2e0');
+
+class ButtonImageApi extends React.Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            api: null
+        };
+    }
+
+    updateformImagePreview = (replace, query) => {
+        let result = null, index = 0;
+        if (query) {
+            if (replace) {
+                client.search(query).then(images => {
+                    result = images;
+                    console.log(result);
+                    $(replace).attr({
+                        src: result[index].url,
+                        alt: query,
+                    });
+                });
+
+                let $id = $("#" + this.props.id);
+                $id.next().removeAttr("disabled");
+                $id.next().on("click", function () {
+                    console.log(index);
+                    if (index < 9) {
+                        $(replace).attr({
+                            src: result[++index].url
+                        });
+                        $id.prev().removeAttr("disabled");
+                    } else {
+                        alert("Sorry, you can't get more images from Google!");
+                    }
+                });
+                $id.prev().on("click", function () {
+                    console.log(index);
+                    if (index > 0) {
+                        $(replace).attr({
+                            src: result[--index].url
+                        });
+                    } else {
+                        alert("You're back at the first image, can't go back!");
+                    }
+                })
+            } else {
+                alert("Developer, please provide an id to replace the image!");
+            }
+        } else {
+            alert("Please provide a product name!");
+        }
+    };
+
+    updateformImageAddonApiModalButton = (target) => {
+        // do this on click of ButtonImageApi
+        // update the content of modal -> this.state.api !!!
+        // this.state.api = <ImageApiGrid query={this.state.name}/>;
+        console.log("Updating ...");
+        // still not sure why stuff in ImageApiGrid won't get called
+        this.setState({api: <ImageApiGrid query={this.props.query}/>}, () => { // das bringt nix, die Component wird gar nicht aufgerufen
+            // show
+            console.log(this.state.api);
+            console.log("Showing ...");
+            // TODO: update the content
+
+
+            $("#" + target.props.id).modal("show");
+        });
+    };
+
+    render() {
+        let className = this.props.class,
+            id = this.props.id,
+            target = this.props.target,
+            query = this.props.query,
+            replace = this.props.replace;
+        return (
+            <button type="button" class={className} id={id} onClick={() => this.updateformImagePreview(replace, query)}>
+            {/*<span class={className} id={id} onClick={() => this.updateformImageAddonApiModalButton(target)}>*/}
+                Get images from API
+            </button>
+        );
+    }
+}
+
 export default class ProductCreate extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.reference = React.createRef();
         this.state = {
+            api: null,
             // for conditional information about bundle and configuration
             type: null,
             category: null
         };
+        // this.updateformImageAddonApiModal = this.updateformImageAddonApiModal.bind(this);
     }
 
     submitHandler = (event) => {
@@ -36,10 +125,6 @@ export default class ProductCreate extends React.Component {
         if (name === 'type' && val === 'bundle') {
             // alert("BUNDLE");
         }
-    };
-
-    showformImageAddonApiModal = (target) => {
-        $(target).modal('show');
     };
 
     render() {
@@ -96,8 +181,6 @@ export default class ProductCreate extends React.Component {
             if (index === this.state.category) {
                 let additionalAttributesHtml = [];
                 let category = formConfig.formCategory.options[index];
-                console.log(index);
-                console.log(this.state.category);
                 additionalAttributesHtml.push(<h2>{category.label}</h2>);
                 for (const kndex in category.attributes) {
                     let additionalAttribute = category.attributes[kndex];
@@ -109,7 +192,9 @@ export default class ProductCreate extends React.Component {
             }
         }
         let additionalInformation = (this.state.type === 'bundle') ? <ProductList/> : (this.state.type === 'simple') ? categoriesHtml : null;
-        let formImageApiModalBody = <ImageApiGrid query={this.state.name}/>;
+        let modalId = "#formImageAddonApiModal";
+
+        let modal = <Modal id="formImageAddonApiModal" title="Import image from API" query={this.state.name}/>;
         return (
             <form onSubmit={this.submitHandler}>
                 <Select label={formConfig.formType.label} id={formConfig.formType.id} name={formConfig.formType.name}
@@ -118,18 +203,29 @@ export default class ProductCreate extends React.Component {
                 <Select label={formConfig.formCategory.label} id={formConfig.formCategory.id} name={formConfig.formCategory.name}
                         options={formConfig.formCategory.options} selected={formConfig.formCategory.selected}
                         onChangeHandler={this.formInputChangeHandler}/>
-                <InputText label="Name" id="formName" name="name" onChangeHandler={this.formInputChangeHandler}/>
-                <label for="formImageAddonLabel">Image:</label>
-                <div class="input-group mb-3">
-                    <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="formImage" ref={this.reference}/>
-                        <label class="custom-file-label" for="formImage">Choose file from your computer</label>
-                    </div>
-                    <div class="input-group-append">
-                        <span class="input-group-text btn btn-secondary" id="formImageAddonApi"
-                              onClick={this.showformImageAddonApiModal.bind(this, "#formImageAddonApiModal")}>
-                            Get images from API
-                        </span>
+                <InputText label="Name" id="formName" name="name" onBlurHandler={this.formInputChangeHandler}/>
+                <div class="media">
+                    <img id="formImagePreview" src="https://www.motorolasolutions.com/content/dam/msi/images/products/accessories/image_not_available_lg.jpg"
+                         class="align-self-start mr-3 img-fluid img-thumbnail w-25" alt="Placeholder"/>
+                    <div class="media-body">
+                        <div class="form-group">
+                            <label for="formImageAddonLabel">Image:</label>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="formImage" ref={this.reference}/>
+                                <label class="custom-file-label" for="formImage">Choose file from your computer</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="btn-group" role="group" aria-label="Handle images from API">
+                                <button type="button" class="btn btn-secondary" disabled="disabled">Previous</button>
+                                <ButtonImageApi class="btn btn-secondary" id="formImageAddonApi"
+                                                replace="#formImagePreview"
+                                                query={this.state.name} text="Get image from API"/>
+                                <button type="button" class="btn btn-secondary" disabled="disabled">Next</button>
+                            </div>
+                            {/*<ButtonImageApi class="input-group-text btn btn-secondary" id="formImageAddonApi"
+                                                                target={modal} query={this.state.name} text="Get images from API"/>*/}
+                        </div>
                     </div>
                 </div>
                 <InputTextarea label="Description" id="formDescription" name="description" rows="5"
@@ -138,7 +234,7 @@ export default class ProductCreate extends React.Component {
                 <InputText label="SKU" id="formSku" name="sku" onChangeHandler={this.formInputChangeHandler}/>
                 {additionalInformation}
                 <button type="submit" class="btn btn-primary">Submit</button>
-                <Modal id="formImageAddonApiModal" title="Import image from API" body={formImageApiModalBody}/>
+                {modal}
             </form>
         );
     }

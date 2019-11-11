@@ -10,11 +10,12 @@ export default class InputText extends React.Component {
         let label = this.props.label,
             id = this.props.id,
             name = this.props.name,
-            onChangeHandler = this.props.onChangeHandler;
+            onChangeHandler = this.props.onChangeHandler,
+            onBlurHandler = this.props.onBlurHandler;
         return (
             <p class="form-group">
                 <label for={id}>{label}</label>
-                <input type="text" class="form-control" id={id} name={name} onChange={onChangeHandler}/>
+                <input type="text" class="form-control" id={id} name={name} onChange={onChangeHandler} onBlur={onBlurHandler}/>
             </p>
         );
     }

@@ -7,7 +7,7 @@ export default class ProductList extends React.Component {
         super();
         this.state = {
             products: {
-                0: {
+                /*0: {
                     name: 'Intel Core i7-9700K',
                     img_src: 'https://placehold.it/250',
                     img_alt: 'Placeholder 250x250px',
@@ -30,7 +30,7 @@ export default class ProductList extends React.Component {
                     price: 500.99,
                     category: 'GFX',
                     sku: 1337,
-                }
+                }*/
             }
         }
     }
