@@ -11,11 +11,12 @@ export default class InputTextarea extends React.Component {
             id = this.props.id,
             name = this.props.name,
             rows = this.props.rows,
-            onChangeHandler = this.props.onChangeHandler;
+            onChangeHandler = this.props.onChangeHandler,
+            value = this.props.value;
         return (
             <p class="form-group">
                 <label for={id}>{label}</label>
-                <textarea class="form-control" id={id} name={name} rows={rows} onChange={onChangeHandler}/>
+                <textarea class="form-control" id={id} name={name} rows={rows} onChange={onChangeHandler} value={value}/>
             </p>
         );
     }

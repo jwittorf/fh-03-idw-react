@@ -7,6 +7,9 @@ import ProductList from "../ProductList/ProductList";
 import $ from "jquery";
 import "popper.js";
 import "bootstrap";
+import ProductSearch from "./ProductSearch";
+import ProductListItem from "../ProductListItem/ProductListItem";
+import {addDB, productDB} from "../ProductList/ProductListDB";
 
 const GoogleImages = require('google-images');
 const client = new GoogleImages('011706504980353428457:zgomawhlc9k', 'AIzaSyC-11-nerHKCNJCpFsLTstJtaLDPpci2e0');
@@ -70,14 +73,41 @@ class ButtonImageApi extends React.Component {
     }
 }
 
+class Product{
+    name = "test";
+    img_src = "https://placehold.it/500";
+    img_alt = 'Placeholder 500x500px';
+    price = 200;
+    category = "CPU";
+    sku = 234232;
+    contains;
+}
+
 export default class ProductCreate extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            itemSearch: '',
+            results: {},
+            selectedItems: {},
+            cProduct: new Product(),
             // for conditional information about bundle and configuration
             type: null,
             category: null
         };
+    }
+
+    createProduct(){
+        let product ={
+            name: this.state.cProduct.name,
+            img_src: this.state.cProduct.img_src,
+            img_alt: this.state.cProduct.img_alt,
+            price: this.state.cProduct.price,
+            category: this.state.cProduct.category,
+            sku: this.state.cProduct.sku,
+            description: this.state.cProduct.description,
+        };
+        productDB[Object.keys(productDB).length+1] = product;
     }
 
     submitHandler = (event) => {
@@ -93,7 +123,95 @@ export default class ProductCreate extends React.Component {
         }
     };
 
+    handleChange = (event) => {
+        console.log("Change");
+        this.setState({itemSearch: event.target.value});
+    };
+
+    handleSubmit = (event) => {
+        console.log("submitted!");
+        console.log(this.state.cProduct);
+        addDB(this.state.cProduct);
+        this.setState({
+            cProduct: new Product()
+        });
+        event.preventDefault();
+    };
+
+    handleName = (event) => {
+        let newProduct = Object.assign({}, this.state.cProduct);
+        newProduct.name = event.target.value;
+        this.setState({cProduct: newProduct});
+    };
+
+    handlePrice = (event) => {
+        let newProduct = Object.assign({}, this.state.cProduct);
+        newProduct.price = event.target.value;
+        this.setState({cProduct: newProduct});
+    };
+
+    handleImgUrl = (event) => {
+        let newProduct = Object.assign({}, this.state.cProduct);
+        newProduct.img_url = event.target.value;
+        newProduct.img_alt = 'Placeholder 500x500px';
+        this.setState({cProduct: newProduct});
+    };
+
+    handleCategory = (event) => {
+        let newProduct = Object.assign({}, this.state.cProduct);
+        newProduct.category = event.target.value;
+        this.setState({cProduct: newProduct});
+    };
+
+    handleSKU = (event) => {
+        let newProduct = Object.assign({}, this.state.cProduct);
+        newProduct.sku = event.target.value;
+        this.setState({cProduct: newProduct});
+    };
+
+    handleDescription = (event) => {
+        let newProduct = Object.assign({}, this.state.cProduct);
+        newProduct.description = event.target.value;
+        this.setState({cProduct: newProduct});
+    };
+
+    handleContains = (event) => {
+        let newProduct = Object.assign({}, this.state.cProduct);
+        newProduct.contains = event.target.value;
+        this.setState({cProduct: newProduct});
+    };
+
     render() {
+        let methods = {
+            "onClick": function() {
+                this.setState({selected: !this.state.selected});
+                this.props.callbackState(this.props.data);
+            },
+            "callbackState": (pair, selected) => {
+                let index = pair["key"];
+                let item = pair["value"];
+                let object = {index: item};
+                let selectedItems = Object.assign({}, this.state.selectedItems);
+                if (!selected) {
+                    console.log("item is not in array");
+                    selectedItems[index] = item;
+                } else {
+                    console.log("item was in array");
+                    delete selectedItems[index];
+                }
+                console.log(selectedItems);
+                this.state.cProduct.contains = selectedItems;
+                this.setState({
+                    selectedItems: selectedItems
+                });
+            }
+        };
+        let names =  [];
+        Object.keys(this.state.selectedItems).forEach( (item) => {
+            console.log(item);
+            names.push(item.name);
+        });
+
         let formConfig = {
             formType: {
                 label: 'Type',
@@ -157,16 +275,30 @@ export default class ProductCreate extends React.Component {
                 categoriesHtml.push(additionalAttributesHtml);
             }
         }
-        let additionalInformation = (this.state.type === 'bundle') ? <ProductList/> : (this.state.type === 'simple') ? categoriesHtml : null;
+        let additionalInformation = null;
+        if (this.state.type === 'bundle') {
+            additionalInformation = (
+                <div>
+                    <h3>Add simple products to this bundle</h3>
+                    <ProductList displayStyle="minimal" products={this.state.selectedItems} methods={methods}/>
+                    <InputText type="text" label="Search for product as component" onChange={this.handleChange} value={this.state.itemSearch} id="formName" />
+                    <ProductSearch search={this.state.itemSearch} onChange={this.handleChange} methods={methods} />
+                </div>
+            );
+        } else {
+            additionalInformation = (this.state.type === 'simple') ? categoriesHtml : null;
+        }
+
         return (
-            <form onSubmit={this.submitHandler}>
+            <form onSubmit={this.handleSubmit} handleChange={this.handleChange} post={this.state.post} handleSubmit={this.handleSubmit}>
                 <Select label={formConfig.formType.label} id={formConfig.formType.id} name={formConfig.formType.name}
                         options={formConfig.formType.options} selected={formConfig.formType.selected}
                         onChangeHandler={this.formInputChangeHandler}/>
                 <Select label={formConfig.formCategory.label} id={formConfig.formCategory.id} name={formConfig.formCategory.name}
                         options={formConfig.formCategory.options} selected={formConfig.formCategory.selected}
                         onChangeHandler={this.formInputChangeHandler}/>
-                <InputText label="Name" id="formName" name="name" onBlurHandler={this.formInputChangeHandler}/>
+                <InputText label="Name" id="formName" name="name" onChangeHandler={this.handleName}
+                           onBlurHandler={this.formInputChangeHandler} value={this.state.cProduct.name}/>
                 <div class="media">
                     <img id="formImagePreview" src="https://www.motorolasolutions.com/content/dam/msi/images/products/accessories/image_not_available_lg.jpg"
                          class="align-self-start mr-3 img-fluid img-thumbnail w-25" alt="Placeholder"/>
@@ -184,10 +316,11 @@ export default class ProductCreate extends React.Component {
                     </div>
                 </div>
                 <InputTextarea label="Description" id="formDescription" name="description" rows="5"
-                               onChangeHandler={this.formInputChangeHandler}/>
-                <InputText label="Price" id="formPrice" name="price" onChangeHandler={this.formInputChangeHandler}/>
-                <InputText label="SKU" id="formSku" name="sku" onChangeHandler={this.formInputChangeHandler}/>
+                               onChangeHandler={this.handleDescription} value={this.state.cProduct.description}/>
+                <InputText label="Price" id="formPrice" name="price" onChangeHandler={this.handlePrice} value={this.state.cProduct.price}/>
+                <InputText label="SKU" id="formSku" name="sku" onChangeHandler={this.handleSku} value={this.state.cProduct.sku}/>
                 {additionalInformation}
+                <hr/>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         );
