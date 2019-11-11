@@ -12,7 +12,7 @@ import ProductListItem from "../ProductListItem/ProductListItem";
 import {addDB, productDB} from "../ProductList/ProductListDB";
 
 const GoogleImages = require('google-images');
-const client = new GoogleImages('011706504980353428457:zgomawhlc9k', 'AIzaSyC-11-nerHKCNJCpFsLTstJtaLDPpci2e0');
+// const client = new GoogleImages('CSE', 'API_KEY');
 
 class ButtonImageApi extends React.Component {
     constructor(props){

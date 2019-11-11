@@ -1,3 +1,21 @@
+# Customer: Shop Owner / Merchant that wants to organize their inventory and sell items in bundles
+
+nonfunctional reqs.:
+- Sell items in bundles or individually
+- Search items and bundles
+- manage items and bundles
+- delete items and bundles
+
+functional reqs.:
+- (login?)
+- articles for sale are items or bundles
+- modularize articles so that they can be easily inserted into several elements within the view
+- bundles are a specialization of articles that can contain several items.
+- articles can have a Name, a Picture, a Category and a Description, as well as Technical Specifications
+- An ER database for quick searches (and a document database for large, verbose information on articles like specifications or descriptions).
+- (maybe just a document database instead?)
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
