@@ -4,8 +4,6 @@ import InputText from "../Form/InputText";
 import InputTextarea from "../Form/InputTextarea";
 import Select from "../Form/Select";
 import ProductList from "../ProductList/ProductList";
-import Modal from "../Modal/Modal";
-import ImageApiGrid from "../Api/ImageApiGrid";
 import $ from "jquery";
 import "popper.js";
 import "bootstrap";
@@ -16,9 +14,6 @@ const client = new GoogleImages('011706504980353428457:zgomawhlc9k', 'AIzaSyC-11
 class ButtonImageApi extends React.Component {
     constructor(props){
         super(props);
-        this.state = {
-            api: null
-        };
     }
 
     updateformImagePreview = (replace, query) => {
@@ -65,32 +60,13 @@ class ButtonImageApi extends React.Component {
         }
     };
 
-    updateformImageAddonApiModalButton = (target) => {
-        // do this on click of ButtonImageApi
-        // update the content of modal -> this.state.api !!!
-        // this.state.api = <ImageApiGrid query={this.state.name}/>;
-        console.log("Updating ...");
-        // still not sure why stuff in ImageApiGrid won't get called
-        this.setState({api: <ImageApiGrid query={this.props.query}/>}, () => { // das bringt nix, die Component wird gar nicht aufgerufen
-            // show
-            console.log(this.state.api);
-            console.log("Showing ...");
-            // TODO: update the content
-
-
-            $("#" + target.props.id).modal("show");
-        });
-    };
-
     render() {
         let className = this.props.class,
             id = this.props.id,
-            target = this.props.target,
             query = this.props.query,
             replace = this.props.replace;
         return (
             <button type="button" class={className} id={id} onClick={() => this.updateformImagePreview(replace, query)}>
-            {/*<span class={className} id={id} onClick={() => this.updateformImageAddonApiModalButton(target)}>*/}
                 Get images from API
             </button>
         );
@@ -102,12 +78,10 @@ export default class ProductCreate extends React.Component {
         super(props);
         this.reference = React.createRef();
         this.state = {
-            api: null,
             // for conditional information about bundle and configuration
             type: null,
             category: null
         };
-        // this.updateformImageAddonApiModal = this.updateformImageAddonApiModal.bind(this);
     }
 
     submitHandler = (event) => {
@@ -192,9 +166,6 @@ export default class ProductCreate extends React.Component {
             }
         }
         let additionalInformation = (this.state.type === 'bundle') ? <ProductList/> : (this.state.type === 'simple') ? categoriesHtml : null;
-        let modalId = "#formImageAddonApiModal";
-
-        let modal = <Modal id="formImageAddonApiModal" title="Import image from API" query={this.state.name}/>;
         return (
             <form onSubmit={this.submitHandler}>
                 <Select label={formConfig.formType.label} id={formConfig.formType.id} name={formConfig.formType.name}
@@ -223,8 +194,6 @@ export default class ProductCreate extends React.Component {
                                                 query={this.state.name} text="Get image from API"/>
                                 <button type="button" class="btn btn-secondary" disabled="disabled">Next</button>
                             </div>
-                            {/*<ButtonImageApi class="input-group-text btn btn-secondary" id="formImageAddonApi"
-                                                                target={modal} query={this.state.name} text="Get images from API"/>*/}
                         </div>
                     </div>
                 </div>
@@ -234,7 +203,6 @@ export default class ProductCreate extends React.Component {
                 <InputText label="SKU" id="formSku" name="sku" onChangeHandler={this.formInputChangeHandler}/>
                 {additionalInformation}
                 <button type="submit" class="btn btn-primary">Submit</button>
-                {modal}
             </form>
         );
     }
