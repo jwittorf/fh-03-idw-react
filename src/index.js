@@ -6,12 +6,13 @@ import {BrowserRouter as Router, Route, Link} from "react-router-dom";
 import About from "./About/About";
 import Contact from "./Contact/Contact";
 import Patient from "./Patient/Patient";
+import "./index.css"
 
 const router = (
     <div>
         <Router>
             <div>
-                <ul>
+                <ul id="routing-list">
                     <li>
                         <Link to="/">Home</Link>
                     </li>

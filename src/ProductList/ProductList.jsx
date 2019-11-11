@@ -66,10 +66,9 @@ export default class ProductList extends React.Component {
         }
         return (
             <div>
-                <h2>Available products</h2>
                 <div class="list-group product-list">
-                    <input type="text" onChange={this.changeName} />
-                    <button type="button" onClick={this.changeProduct}>Change product</button>
+                    {/*<input type="text" onChange={this.changeName} />
+                    <button type="button" onClick={this.changeProduct}>Change product</button> */}
                     {productsHtml}
                 </div>
             </div>

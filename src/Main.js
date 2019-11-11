@@ -13,6 +13,7 @@ function Main() {
             <div class="row">
                 <div class="col-md-4 order-2 min-vh-100">
                     <div id="sidebar" class="sticky-top flex-grow-1">
+                        <h2>Available products</h2>
                         <ProductList/>
                     </div>
                 </div>

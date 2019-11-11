@@ -1,4 +1,3 @@
-
 const productDB = {
     0: {
         name: 'Intel Core i7-9700K',
@@ -22,6 +21,10 @@ const productDB = {
             category: 'GFX',
     }
 };
+
+export function getList (){
+    return productDB;
+}
 
 export function searchDB (search){
     let results = {};

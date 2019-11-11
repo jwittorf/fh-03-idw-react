@@ -95,15 +95,15 @@ export default class ProductCreate extends React.Component {
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="description">Description:</label>
+                        <label for="description">Description</label>
                         <textarea class="form-control" rows="5" id="description" onChange={this.handleDescription} value={this.state.cProduct.description}/>
                     </div>
                     <InputText label="Price" id="formName" onChange={this.handlePrice} value={this.state.cProduct.price}/>
                     <InputText label="SKU" id="formName" onChange={this.handleSKU} value={this.state.cProduct.SKU}/>
-                    <InputText type="text" label="Items" onChange={this.handleChange} value={this.state.itemSearch} id="formName" />
                     <ProductList class="minimal-list" displayStyle="minimal" products={this.state.selectedItems} methods={methods}/>
+                    <button type="submit">Create</button>
+                    <InputText type="text" label="Add Components" onChange={this.handleChange} value={this.state.itemSearch} id="formName" />
                     <ProductSearch search={this.state.itemSearch} onChange={this.handleChange} methods={methods} />
-                    <button type="submit">submission</button>
                 </form>
             </div>
         );
@@ -180,7 +180,7 @@ export default class ProductCreate extends React.Component {
 
 class Product{
     name = "test";
-    img_src = "./test/test.jpg";
+    img_src = "https://placehold.it/500";
     img_alt = 'Placeholder 500x500px';
     price = 200;
     category = "CPU";
