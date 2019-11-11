@@ -22,7 +22,6 @@ class ButtonImageApi extends React.Component {
             if (replace) {
                 client.search(query).then(images => {
                     result = images;
-                    console.log(result);
                     $(replace).attr({
                         src: result[index].url,
                         alt: query,
@@ -32,7 +31,6 @@ class ButtonImageApi extends React.Component {
                 let $id = $("#" + this.props.id);
                 $id.next().removeAttr("disabled");
                 $id.next().on("click", function () {
-                    console.log(index);
                     if (index < 9) {
                         $(replace).attr({
                             src: result[++index].url
@@ -43,7 +41,6 @@ class ButtonImageApi extends React.Component {
                     }
                 });
                 $id.prev().on("click", function () {
-                    console.log(index);
                     if (index > 0) {
                         $(replace).attr({
                             src: result[--index].url
@@ -76,7 +73,6 @@ class ButtonImageApi extends React.Component {
 export default class ProductCreate extends React.Component {
     constructor(props) {
         super(props);
-        this.reference = React.createRef();
         this.state = {
             // for conditional information about bundle and configuration
             type: null,
@@ -86,10 +82,6 @@ export default class ProductCreate extends React.Component {
 
     submitHandler = (event) => {
         event.preventDefault();
-        if (!this.reference.current.files[0]) {
-            // TODO: test this
-            // no image uploaded
-        }
     };
 
     formInputChangeHandler = (event) => {
@@ -179,13 +171,7 @@ export default class ProductCreate extends React.Component {
                     <img id="formImagePreview" src="https://www.motorolasolutions.com/content/dam/msi/images/products/accessories/image_not_available_lg.jpg"
                          class="align-self-start mr-3 img-fluid img-thumbnail w-25" alt="Placeholder"/>
                     <div class="media-body">
-                        <div class="form-group">
-                            <label for="formImageAddonLabel">Image:</label>
-                            <div class="custom-file">
-                                <input type="file" class="custom-file-input" id="formImage" ref={this.reference}/>
-                                <label class="custom-file-label" for="formImage">Choose file from your computer</label>
-                            </div>
-                        </div>
+                        <label for="formImageAddonLabel">Image:</label>
                         <div class="form-group">
                             <div class="btn-group" role="group" aria-label="Handle images from API">
                                 <button type="button" class="btn btn-secondary" disabled="disabled">Previous</button>
